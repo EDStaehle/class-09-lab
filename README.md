@@ -10,7 +10,7 @@ create a rest auth server that allows a user to create various food and dessert 
 
 ### Links and Resources
 
-- [ci/cd](https://github.com/EDStaehle/auth-api/actions) (GitHub Actions)
+- [ci/cd](https://github.com/EDStaehle/class-09-lab/actions) (GitHub Actions)
 - [prod development](postgres://eliasstaehle_user:RXgpZrgEXdvXlVg4FgUeRqZD5NaU2bzL@dpg-ce42fk6n6mpku7k0j3rg-a.ohio-postgres.render.com/eliasstaehle)
 
 ### Setup
@@ -33,8 +33,12 @@ see `.env.sample`
 - GET : `` - specific route to hit
 - GET : `/bad` -  specific route to hit
 - Feature One: deploy to prod
-- GET : `/hello` - specific route to hit
-- GET : `/person` - specific route to hit
+- POST : `/signup` - specific route to hit
+- POST : `/signin` - specific route to hit
+- POST : `/api/v1/food` - specific route to hit
+- POST : `/api/v1/dessert` - specific route to hit
+- GET : `userswithfood` - specific route to hit
+- GET : `userswithdesserts` - specific route to hit
 
 #### Tests
 
