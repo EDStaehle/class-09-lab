@@ -51,4 +51,4 @@ see `.env.sample`
 
 #### UML
 
-![UML](./src/assets/class-03-uml.png)
+![UML](./class-09-uml.png)
