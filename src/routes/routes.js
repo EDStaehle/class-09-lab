@@ -4,10 +4,11 @@ const express = require('express');
 const dataModules = require('../auth/models/index');
 const router = express.Router();
 const authRouter = express.Router();
-const { users } = require('../auth/models');
+const { users, food, dessert } = require('../auth/models');
 const basicAuth = require('../auth/middleware/basic');
 const bearerAuth = require('../auth/middleware/bearer');
 const permissions = require('../auth/middleware/acl');
+
 router.param('model', (req, res, next) => {
   const modelName = req.params.model;
   if (dataModules[modelName]) {
@@ -63,6 +64,33 @@ authRouter.put('/users/:id', bearerAuth, permissions('update'), async (req, res,
 authRouter.get('/secret', bearerAuth, async (req, res, next) => {
   res.status(200).send('Welcome to the secret area');
 });
+
+
+authRouter.get('/userswithfood/:id',async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const userswithfood = await users.findOne({where:{id}, include: food.model})
+    res.status(200).send(userswithfood);
+
+  } catch (e) {
+    next(e);
+  }
+})
+authRouter.get('/userswithdessert/:id',async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const userswithdessert = await users.findOne({where:{id}, include: dessert.model})
+    res.status(200).send(userswithdessert);
+
+  } catch (e) {
+    next(e);
+  }
+})
+
+
+
+
+
 router.get('/:model',bearerAuth,permissions('read'), handleGetAll);
 router.get('/:model/:id',bearerAuth,permissions('read'), handleGetOne);
 router.post('/:model',bearerAuth,permissions('create'), handleCreate);
@@ -79,8 +107,12 @@ async function handleGetOne(req, res) {
 }
 async function handleCreate(req, res) {
   let obj = req.body;
-  let newRecord = await req.model.create(obj);
+  let id = req.user.id;
+
+  let newRecord =  req.model === 'food'? await req.model.createFood(obj, id):  await req.model.createDessert(obj, id)
   res.status(201).json(newRecord);
+
+
 }
 async function handleUpdate(req, res) {
   const id = req.params.id;
