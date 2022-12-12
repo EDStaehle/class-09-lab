@@ -109,7 +109,7 @@ async function handleCreate(req, res) {
   let obj = req.body;
   let id = req.user.id;
 
-  let newRecord =  req.model === 'food'? await req.model.createFood(obj, id):  await req.model.createDessert(obj, id)
+  let newRecord =  req.model === food? await req.model.createFood(obj, id):  await req.model.createDessert(obj, id)
   res.status(201).json(newRecord);
 
 
